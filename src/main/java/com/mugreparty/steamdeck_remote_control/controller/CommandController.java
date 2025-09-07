@@ -29,4 +29,10 @@ public class CommandController {
         return ResponseEntity.accepted().body(Map.of("id", id));
     }
 
+    /*@PostMapping
+    public ResponseEntity<String> receiveRaw(@RequestBody String raw) {
+        System.out.println(">>> RAW BODY: " + raw);
+        return ResponseEntity.ok("recibido");
+    }*/
+
 }

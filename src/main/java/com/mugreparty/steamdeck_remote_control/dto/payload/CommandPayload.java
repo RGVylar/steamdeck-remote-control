@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 // usa el campo externo "type" de CommandDto para resolver el subtipo
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "type")
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.NAME,
+  include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
+  property = "type",
+  visible = true)
 @JsonSubTypes({
   @JsonSubTypes.Type(value = MousePayload.class,     name = "MOUSE"),
   @JsonSubTypes.Type(value = KeyboardPayload.class,  name = "KEYBOARD"),

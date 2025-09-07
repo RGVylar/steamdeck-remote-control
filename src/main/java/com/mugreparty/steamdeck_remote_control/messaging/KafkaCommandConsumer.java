@@ -16,8 +16,8 @@ public class KafkaCommandConsumer {
     }
 
     @KafkaListener(topics = "commands", groupId = "remote-executor")
-    public void consume(CommandDto command) {
-        System.out.println("Received command: " + command);
-        executor.execute(command);
+    public void consume(CommandDto dto) {
+        System.out.println("Received command: " + dto);
+        executor.execute(dto);
     }    
 }

@@ -1,7 +1,7 @@
 package com.mugreparty.steamdeck_remote_control.system;
 
 import com.mugreparty.steamdeck_remote_control.dto.CommandDto;
-import com.mugreparty.steamdeck_remote_control.dto.CommandType;
+import com.mugreparty.steamdeck_remote_control.enums.CommandType;
 import com.mugreparty.steamdeck_remote_control.dto.payload.MousePayload;
 import com.mugreparty.steamdeck_remote_control.dto.payload.TextPayload;
 import com.mugreparty.steamdeck_remote_control.enums.CommandAction;
@@ -40,7 +40,15 @@ public class InputExecutor {
   private void handleMouse(CommandDto dto) {
     var p = (MousePayload) dto.payload();
     if (dto.action() == CommandAction.MOVE) {
-      robot.mouseMove(p.x, p.y);
+        // Soporta absoluto (x,y) o relativo (dx,dy)
+        if (p.x != null && p.y != null) {
+            robot.mouseMove(p.x, p.y);
+        } else {
+            var loc = java.awt.MouseInfo.getPointerInfo().getLocation();
+            int nx = loc.x + (p.dx == null ? 0 : p.dx);
+            int ny = loc.y + (p.dy == null ? 0 : p.dy);
+            robot.mouseMove(nx, ny);
+        }
     } else if (dto.action() == CommandAction.CLICK) {
       int mask = switch (p.button == null ? "LEFT" : p.button.toUpperCase()) {
         case "RIGHT" -> InputEvent.BUTTON3_DOWN_MASK;

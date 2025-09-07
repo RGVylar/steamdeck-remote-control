@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+  />
+  <title>SteamDeck Remote</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <section class="col input-col">
+      <h1>Remote</h1>
+      <label class="lbl">Texto a escribir</label>
+      <textarea id="text" rows="3" placeholder="Escribe aquí…"></textarea>
+
+      <div class="row gap">
+        <button id="send">Enviar + Enter</button>
+        <button id="focus">CTRL+L</button>
+        <button id="esc">ESC</button>
+      </div>
+
+      <div class="row gap">
+        <button id="lclick">Click izquierdo</button>
+        <button id="rclick">Click derecho</button>
+      </div>
+    </section>
+    
+    <section class="col pad-col">
+      <div class="row gap" style="align-items:center">
+        <label for="sens" class="lbl" style="margin:0">Sensibilidad</label>
+        <input id="sens" type="range" min="0.4" max="10.0" step="0.1" value="5.0" />
+        <span id="sensVal">5.0×</span>
+      </div>
+      <div id="pad" class="pad" aria-label="Trackpad táctil"></div>
+      <small class="hint">
+        Desliza para mover el ratón de forma relativa.
+        Pincha para mover el raton de forma absoluta.
+        Usa los botones para click izquierdo y derecho.
+      </small>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

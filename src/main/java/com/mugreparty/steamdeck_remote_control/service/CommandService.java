@@ -26,21 +26,25 @@ public class CommandService {
         // Validaciones basicas
         if (dto == null) throw new IllegalArgumentException("CommandDto no puede ser null");
         if (dto.action() == null) throw new IllegalArgumentException("action es obligatorio");
+        if (dto.type() == null) throw new IllegalArgumentException("type es obligatorio");
 
         String id = UUID.randomUUID().toString();
         long ts = Instant.now().toEpochMilli();
+        String target = (dto.target() == null || dto.target().isBlank()) ? "local" : dto.target();
         
         // Pongo bonito el mensaje
-        Map<String, Object> envelope = new HashMap<>();
-        envelope.put("id", id);
-        envelope.put("ts", ts);
-        envelope.put("action", dto.action());
-        envelope.put("payload", dto.payload() == null ? Map.of() : dto.payload());
-        envelope.put("target", "local");
+         CommandDto normalized = new CommandDto(
+            id,
+            dto.type(),
+            dto.action(),
+            dto.payload(),
+            target,
+            ts
+        );
 
-        producer.send(envelope);
+        producer.send(normalized);
 
-        return "";
+        return id;
     }
 
 }   
