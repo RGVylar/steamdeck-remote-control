@@ -12,17 +12,50 @@ button {
   cursor:pointer; font-weight:600;
 }
 button:active { transform:scale(0.98); }
-.pad_old {
+.pad_squared{
   width:100%; aspect-ratio:1/1; border-radius:16px;
   background:linear-gradient(180deg,#101216,#0e1014);
   border:1px dashed #2d3038; margin-top:8px;
   touch-action:none;  /* importante para móviles */
 }
 .pad {
-  width:100%; aspect-ratio:16/9; border-radius:16px;
+  width:100%; aspect-ratio:auto; border-radius:16px;
   background:linear-gradient(180deg,#101216,#0e1014);
   border:1px dashed #2d3038; margin-top:8px;
   touch-action:none;  /* importante para móviles */
 }
 .hint { display:block; margin-top:8px; opacity:.7; }
 @media (max-width: 900px) { .wrap { grid-template-columns:1fr; } }
+
+.mouse-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.mouse-btn {
+  flex: 1;
+  height: 60px;
+  background:#2a6df5;
+  border:dashed #2d3038;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.mouse-btn.left {
+  margin-right: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.mouse-btn.right {
+  margin-left: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#pad {
+  touch-action: none;          /* esencial en móviles */
+  -ms-touch-action: none;      /* IE/Edge antiguo */
+  user-select: none;
+}
