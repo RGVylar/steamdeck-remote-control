@@ -1,8 +1,11 @@
 package com.mugreparty.steamdeck_remote_control.controller;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
