@@ -1,4 +1,4 @@
-package com.mugreparty.steamdeck_remote_control.dto;
+package com.mugreparty.steamdeck_remote_control.enums;
 
 public enum CommandAction {
   // MOUSE

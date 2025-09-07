@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
+import com.mugreparty.steamdeck_remote_control.enums.CommandAction;
+import com.mugreparty.steamdeck_remote_control.enums.CommandType;
+
 /**
  * DTO principal para mandar comandos a traves de la API.
  * Ejemplo:

@@ -1,10 +1,12 @@
 package com.mugreparty.steamdeck_remote_control.system;
 
 import com.mugreparty.steamdeck_remote_control.dto.CommandDto;
-import com.mugreparty.steamdeck_remote_control.dto.CommandAction;
 import com.mugreparty.steamdeck_remote_control.dto.CommandType;
 import com.mugreparty.steamdeck_remote_control.dto.payload.MousePayload;
 import com.mugreparty.steamdeck_remote_control.dto.payload.TextPayload;
+import com.mugreparty.steamdeck_remote_control.enums.CommandAction;
+
+
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
