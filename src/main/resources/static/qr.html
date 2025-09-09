@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Conecta tu móvil</title>
+  <link rel="stylesheet" href="qr.css" />
+</head>
+<body>
+  <main class="qr-wrap">
+    <section class="qr-card">
+      <header class="qr-header">
+        <h1>Escanea este QR</h1>
+        <p class="qr-sub">Abre el control remoto en tu móvil (misma Wi-Fi)</p>
+      </header>
+
+      <div class="qr-canvas-wrap">
+        <canvas id="qrcanvas" width="280" height="280" aria-label="Código QR"></canvas>
+      </div>
+
+      <div class="qr-url">
+        <span id="fallbackUrl">cargando…</span>
+        <button id="copyUrl" class="btn ghost" title="Copiar enlace">Copiar</button>
+      </div>
+
+      <div class="qr-actions">
+        <button id="refreshQr" class="btn">Refrescar</button>
+        <button id="quitApp" class="btn danger" title="Cerrar aplicación">Salir</button>
+      </div>
+
+      <footer class="qr-footer">
+        <small>Si el QR no funciona, usa el enlace de arriba.</small>
+      </footer>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="qr.js"></script>
+</body>
+</html>

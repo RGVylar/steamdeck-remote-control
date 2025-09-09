@@ -1,0 +1,116 @@
+:root {
+  --bg: #0b0b0c;
+  --bg2: #121317;
+  --panel: #15161a;
+  --border: #2a2d34;
+  --text: #e8e8ea;
+  --muted: #aeb0b6;
+  --primary: #2a6df5;
+  --primary-hover: #3b7cff;
+  --danger: #e53935;
+  --shadow: 0 8px 30px rgba(0,0,0,.35);
+  font-family: system-ui, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; height: 100%;
+  background: linear-gradient(180deg, var(--bg), var(--bg2));
+  color: var(--text);
+}
+
+.qr-wrap {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.qr-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 18px;
+  box-shadow: var(--shadow);
+}
+
+.qr-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 1.5rem;
+}
+
+.qr-sub {
+  margin: 0;
+  color: var(--muted);
+}
+
+.qr-canvas-wrap {
+  margin: 16px 0 10px;
+  display: grid;
+  place-items: center;
+}
+
+#qrcanvas {
+  width: 280px; height: 280px;
+  background: linear-gradient(180deg, #101216, #0e1014);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.qr-url {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #101216;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  overflow: auto;
+}
+
+.qr-url span {
+  flex: 1;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.qr-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, transform .05s, opacity .2s;
+}
+.btn:hover { background: var(--primary-hover); }
+.btn:active { transform: scale(.98); }
+.btn:disabled { opacity: .6; cursor: default; }
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn.danger {
+  background: var(--danger);
+}
+.qr-footer {
+  margin-top: 8px;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 420px) {
+  #qrcanvas { width: 240px; height: 240px; }
+}
