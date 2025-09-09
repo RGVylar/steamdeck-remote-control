@@ -5,10 +5,18 @@ Remote.pad = (() => {
   let rafPending = false, queuedDX = 0, queuedDY = 0;
   const throttleMs = 16;
 
+  // --- Tap detection ---
+  let tapStartTime = 0;
+  let movedTooMuch = false;
+  const TAP_MAX_DURATION = 250; // ms
+  const TAP_MOVE_TOLERANCE = 10; // px
+
   function reset() {
     lastX = null; lastY = null;
     queuedDX = 0; queuedDY = 0;
     rafPending = false;
+    tapStartTime = 0;
+    movedTooMuch = false;
   }
 
   function sendRelative(dx, dy) {
@@ -38,36 +46,73 @@ Remote.pad = (() => {
     Remote.api.sendCommand({ type:"MOUSE", action:"MOVE", payload:{ mode:"RELATIVE", dx: sdx, dy: sdy }});
   }
 
-  function pointerDown(e){ padEl.setPointerCapture?.(e.pointerId); lastX=e.clientX; lastY=e.clientY; }
+  function pointerDown(e){
+    padEl.setPointerCapture?.(e.pointerId);
+    lastX=e.clientX;
+    lastY=e.clientY;
+    tapStartTime = Date.now();
+    movedTooMuch = false;     
+  }
   function pointerMove (e){
     if (!Remote.ui.isRelative()) return;
     if (lastX==null||lastY==null){ lastX=e.clientX; lastY=e.clientY; return; }
     const dx=e.clientX-lastX, dy=e.clientY-lastY;
+
+    if (Math.abs(dx) > TAP_MOVE_TOLERANCE || Math.abs(dy) > TAP_MOVE_TOLERANCE) {
+      movedTooMuch = true;
+    }
+
     lastX=e.clientX; lastY=e.clientY;
     sendRelative(dx,dy);
   }
+
   function pointerUp(e){
-    if (Remote.ui.isRelative()) { reset(); return; }
-    const { x,y } = Remote.screen.toAbsolute(e.clientX, e.clientY);
-    Remote.api.sendCommand({ type:"MOUSE", action:"MOVE", payload:{ mode:"ABSOLUTE", x, y }});
+    const tapDuration = Date.now() - tapStartTime;
+    if (tapDuration <= TAP_MAX_DURATION && !movedTooMuch) {
+      Remote.api.sendCommand({
+        type:"MOUSE", action:"CLICK", payload:{ button:"LEFT" }
+      });
+    } else if (!Remote.ui.isRelative()) {
+      const { x,y } = Remote.screen.toAbsolute(e.clientX, e.clientY);
+      Remote.api.sendCommand({ type:"MOUSE", action:"MOVE", payload:{ mode:"ABSOLUTE", x, y }});
+    }
     reset();
   }
 
-  function touchStart(e){ const t=e.touches[0]; lastX=t.clientX; lastY=t.clientY; }
+  function touchStart(e){
+    const t=e.touches[0];
+    lastX=t.clientX;
+    lastY=t.clientY;
+    tapStartTime = Date.now();
+    movedTooMuch = false;
+  }
+
   function touchMove (e){
     if (!Remote.ui.isRelative()) return;
     const t=e.touches[0]; if(!t) return;
     if (lastX==null||lastY==null){ lastX=t.clientX; lastY=t.clientY; return; }
     const dx=t.clientX-lastX, dy=t.clientY-lastY;
+
+    if (Math.abs(dx) > TAP_MOVE_TOLERANCE || Math.abs(dy) > TAP_MOVE_TOLERANCE) {
+      movedTooMuch = true;
+    }
+
     lastX=t.clientX; lastY=t.clientY;
     sendRelative(dx,dy);
     e.preventDefault();
   }
+
   function touchEnd(e){
-    if (Remote.ui.isRelative()) { reset(); return; }
-    const t=e.changedTouches[0]; if(!t) return;
-    const { x,y } = Remote.screen.toAbsolute(t.clientX, t.clientY);
-    Remote.api.sendCommand({ type:"MOUSE", action:"MOVE", payload:{ mode:"ABSOLUTE", x, y }});
+    const tapDuration = Date.now() - tapStartTime;
+    if (tapDuration <= TAP_MAX_DURATION && !movedTooMuch) {
+      Remote.api.sendCommand({
+        type:"MOUSE", action:"CLICK", payload:{ button:"LEFT" }
+      });
+    } else if (!Remote.ui.isRelative()) {
+      const t=e.changedTouches[0]; if(!t) return;
+      const { x,y } = Remote.screen.toAbsolute(t.clientX, t.clientY);
+      Remote.api.sendCommand({ type:"MOUSE", action:"MOVE", payload:{ mode:"ABSOLUTE", x, y }});
+    }
     reset();
   }
 

@@ -1,16 +1,42 @@
 :root { font-family: system-ui, Segoe UI, Roboto, Arial; }
 * { box-sizing:border-box; }
-body { margin:0; background:#0b0b0c; color:#e8e8ea; }
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #0b0b0c, #121317);
+  color: #e8e8ea;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
 .wrap { display:grid; grid-template-columns:1fr 1fr; gap:16px; padding:16px; }
-.col { background:#15161a; border:1px solid #24262c; border-radius:16px; padding:16px; }
+
+.col {
+  background: #15161a;
+  border: 1px solid #2a2d34;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
 .lbl { display:block; margin-bottom:8px; opacity:.8; }
 textarea { width:100%; background:#0e0f12; color:#e8e8ea; border:1px solid #2a2d34; border-radius:12px; padding:10px; }
 .row { display:flex; align-items:center; }
 .gap { gap:8px; margin-top:10px; flex-wrap:wrap; }
+
 button {
-  background:#2a6df5; color:white; border:none; border-radius:12px; padding:10px 12px;
-  cursor:pointer; font-weight:600;
+  background: #2a6df5;
+  border: none;
+  color:white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
 }
+
+button:hover { background: #3b7cff; }
+button:active { transform: scale(0.96); }
+
+
 button:active { transform:scale(0.98); }
 .pad_squared{
   width:100%; aspect-ratio:1/1; border-radius:16px;
@@ -18,12 +44,14 @@ button:active { transform:scale(0.98); }
   border:1px dashed #2d3038; margin-top:8px;
   touch-action:none;  /* importante para móviles */
 }
+
 .pad {
   width:100%; aspect-ratio:auto; border-radius:16px;
-  background:linear-gradient(180deg,#101216,#0e1014);
-  border:1px dashed #2d3038; margin-top:8px;
+  background: linear-gradient(180deg,#101216,#0e1014);
+  border: 1px dashed #2a6df5; margin-top:8px;
   touch-action:none;  /* importante para móviles */
 }
+
 .hint { display:block; margin-top:8px; opacity:.7; }
 @media (max-width: 900px) { .wrap { grid-template-columns:1fr; } }
 
@@ -48,8 +76,14 @@ button:active { transform:scale(0.98); }
   border-bottom-right-radius: 0;
 }
 
+.mouse-btn.center {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 .mouse-btn.right {
-  margin-left: 4px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -58,4 +92,76 @@ button:active { transform:scale(0.98); }
   touch-action: none;          /* esencial en móviles */
   -ms-touch-action: none;      /* IE/Edge antiguo */
   user-select: none;
+}
+
+.settings {
+  margin-top: 12px;
+  border: 1px solid #2a2d34;
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: #121318;
+}
+.settings > summary {
+  cursor: pointer;
+  font-weight: 600;
+  outline: none;
+  list-style: none;
+}
+.settings > summary::-webkit-details-marker { display: none; }
+
+.text-row {
+  display: flex;
+  gap: 8px;
+}
+
+.text-row textarea {
+  flex: 1;
+  resize: vertical; /* opcional */
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.text-row button {
+  white-space: nowrap;
+  height: auto;
+  align-self: stretch; /* se estira para igualar altura al textarea */
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Ajustes genéricos (si aún no los tienes) */
+.settings {
+  border: 1px solid #2a2d34;
+  border-radius: 12px;
+  background: #121318;
+  padding: 10px 12px;
+}
+.settings > summary { cursor: pointer; list-style: none; }
+.settings > summary::-webkit-details-marker { display: none; }
+
+/* Cabecera bonita del ajuste */
+.setting-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 2px;
+}
+
+#deviceName {
+  background: #1a1c22;
+  border: 1px solid #2a2d34;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-weight: 600;
+  color: #e8e8ea;
+}
+
+/* Select a juego con el tema */
+select#device {
+  background: #0e0f12;
+  color: #e8e8ea;
+  border: 1px solid #2a2d34;
+  border-radius: 10px;
+  padding: 8px 10px;
 }

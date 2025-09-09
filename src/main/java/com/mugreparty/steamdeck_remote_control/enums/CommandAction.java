@@ -6,5 +6,12 @@ public enum CommandAction {
   // KEYBOARD
   PRESS, RELEASE,
   // TEXT
-  TYPE
+  TYPE,
+  // SYSTEM
+  VOLUME_UP,
+  VOLUME_DOWN,
+  TOGGLE_MUTE,
+  PLAY_PAUSE,
+  NEXT,
+  PREV
 }

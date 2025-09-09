@@ -5,25 +5,35 @@
   const absToggle    = document.getElementById("absToggle");
   const text         = document.getElementById("text");
   const sendBtn      = document.getElementById("send");
-  const focusBtn     = document.getElementById("focus");
-  const escBtn       = document.getElementById("esc");
   const lclickBtn    = document.getElementById("lclick");
   const rclickBtn    = document.getElementById("rclick");
   const screenInfo   = document.getElementById("screenInfo");
   const syncBtn      = document.getElementById("syncScreen");
   const scrollUpBtn  = document.getElementById("scrollUp");
   const scrollDownBtn= document.getElementById("scrollDown");
+  const volUp   = document.getElementById("volUp");
+  const volDown = document.getElementById("volDown");
+  const volMute = document.getElementById("volMute");
+  const mediaPrevBtn      = document.getElementById("mediaPrev");
+  const mediaPlayPauseBtn = document.getElementById("mediaPlayPause");
+  const mediaNextBtn      = document.getElementById("mediaNext");
 
   // NUEVO: selector de dispositivos (añadidos en index.html)
   const deviceSel    = document.getElementById("device");
   const refreshBtn   = document.getElementById("refreshDevices");
+  const deviceName = document.getElementById("deviceName");
   const LS_KEY       = "selectedDevice";
+
+  function updateDeviceSummary() {
+    const txt = deviceSel?.selectedOptions?.[0]?.textContent || "—";
+    if (deviceName) deviceName.textContent = txt;
+  }
 
   // ---- Selector de dispositivo ----
   async function loadDevices() {
     // Fallback si aún no existe el endpoint en el backend
     let devices = [
-      { id: "local",     name: "Este portátil" },
+      { id: "local",     name: "Server" },
       { id: "steamdeck", name: "Steam Deck" }
     ];
     try {
@@ -51,11 +61,13 @@
         deviceSel.value = prev;
       }
       localStorage.setItem(LS_KEY, deviceSel.value);
+      updateDeviceSummary();  
     }
   }
 
   deviceSel?.addEventListener("change", () => {
     localStorage.setItem(LS_KEY, deviceSel.value);
+    updateDeviceSummary();  
   });
 
   refreshBtn?.addEventListener("click", loadDevices);
@@ -69,6 +81,22 @@
     };
   }
 
+  function sendSystem(action) {
+    Remote.api.sendCommand({
+      type: "SYSTEM",
+      action,              // "VOLUME_UP" | "VOLUME_DOWN" | "TOGGLE_MUTE"
+      payload: {},         // sin payload
+    });
+  }
+
+  if (volUp)   volUp.addEventListener("click",   () => sendSystem("VOLUME_UP"));
+  if (volDown) volDown.addEventListener("click", () => sendSystem("VOLUME_DOWN"));
+  if (volMute) volMute.addEventListener("click", () => sendSystem("TOGGLE_MUTE"));
+
+  if (mediaPlayPauseBtn)   mediaPlayPauseBtn.addEventListener("click",   () => sendSystem("PLAY_PAUSE"));
+  if (mediaNextBtn) mediaNextBtn.addEventListener("click", () => sendSystem("NEXT"));
+  if (mediaPrevBtn) mediaPrevBtn.addEventListener("click", () => sendSystem("PREV"));
+
   // Cargar lista al inicio
   loadDevices();
 
@@ -78,7 +106,7 @@
   // 2) UI (sensibilidad/botones)
   Remote.ui.init({
     sens, sensVal, absT: absToggle,
-    text, sendBtn, focusBtn, escBtn,
+    text, sendBtn,
     lclickBtn, rclickBtn, scrollUpBtn,
     scrollDownBtn
   }); // 

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
   @JsonSubTypes.Type(value = MousePayload.class,     name = "MOUSE"),
   @JsonSubTypes.Type(value = KeyboardPayload.class,  name = "KEYBOARD"),
-  @JsonSubTypes.Type(value = TextPayload.class,      name = "TEXT_INPUT")
+  @JsonSubTypes.Type(value = TextPayload.class,      name = "TEXT_INPUT"),
+  @JsonSubTypes.Type(value = SystemPayload.class,   name = "SYSTEM")
 })
-public sealed interface CommandPayload permits MousePayload, KeyboardPayload, TextPayload {}
+public sealed interface CommandPayload permits MousePayload, KeyboardPayload, TextPayload, SystemPayload {}

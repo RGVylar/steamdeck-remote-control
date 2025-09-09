@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.mugreparty.steamdeck_remote_control.dto.payload.CommandPayload;
 import com.mugreparty.steamdeck_remote_control.dto.payload.KeyboardPayload;
 import com.mugreparty.steamdeck_remote_control.dto.payload.MousePayload;
+import com.mugreparty.steamdeck_remote_control.dto.payload.SystemPayload;
 import com.mugreparty.steamdeck_remote_control.dto.payload.TextPayload;
 import com.mugreparty.steamdeck_remote_control.enums.CommandAction;
 import com.mugreparty.steamdeck_remote_control.enums.CommandType;
@@ -36,7 +37,8 @@ public record CommandDto (
     @com.fasterxml.jackson.annotation.JsonSubTypes({
         @com.fasterxml.jackson.annotation.JsonSubTypes.Type(value = TextPayload.class,     name = "TEXT_INPUT"),
         @com.fasterxml.jackson.annotation.JsonSubTypes.Type(value = KeyboardPayload.class, name = "KEYBOARD"),
-        @com.fasterxml.jackson.annotation.JsonSubTypes.Type(value = MousePayload.class,    name = "MOUSE")
+        @com.fasterxml.jackson.annotation.JsonSubTypes.Type(value = MousePayload.class,    name = "MOUSE"),
+        @com.fasterxml.jackson.annotation.JsonSubTypes.Type(value = SystemPayload.class,    name = "SYSTEM")
     })
     @NotNull CommandPayload payload,
     @NotBlank String target, // local
