@@ -2,7 +2,7 @@
 
 [![Java](https://img.shields.io/badge/Java-17-red?logo=openjdk)]()
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-green?logo=springboot)]()
-[![Apache Kafka](https://img.shields.io/badge/Kafka-3.7-black?logo=apachekafka)]()
+[![Apache Kafka](https://img.shields.io/badge/Kafka-3.7-cyan?logo=apachekafka)]()
 [![Frontend](https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-blue?logo=javascript)]()
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)]()
 ![GitHub last commit](https://img.shields.io/github/last-commit/rgvylar/steamdeck-remote-control)
