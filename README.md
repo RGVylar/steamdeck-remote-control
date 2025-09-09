@@ -9,7 +9,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/rgvylar/steamdeck-remote-control)
 
 
-Controla tu **PC o Steam Deck** desde el móvil:
+Controla tu **PC o Steam Deck o varios dispositivos** desde el móvil:
 - Mueve el ratón (modo relativo o absoluto).
 - Haz clic izquierdo/derecho.
 - Haz scroll.
@@ -17,6 +17,7 @@ Controla tu **PC o Steam Deck** desde el móvil:
 - Atajos rápidos (ESC, CTRL+L).
 - Selección de dispositivo remoto.
 - Botones multimedia: 🔊 Subir volumen, 🔉 Bajar volumen, 🔇 Silencio.
+- **Selector de dispositivo remoto** (elige a qué equipo enviar comandos).
 
 ---
 
@@ -72,6 +73,8 @@ Móvil (web UI) -> REST API (Spring Boot) -> Kafka (topic: commands) -> Consumer
 
 ## Uso
 
+- **Selector de dispositivo**: desde el móvil puedes elegir a qué equipo enviar los comandos (ej. `local`, `steamdeck`, `pc-salón`).  
+  Esto permite controlar **varios dispositivos en la misma red** con una sola app.
 - **Mover ratón**: desliza en el trackpad.
 - **Click**: botones 🖱️ L / 🖱️ R.
 - **Scroll**: botones ▲ / ▼.
