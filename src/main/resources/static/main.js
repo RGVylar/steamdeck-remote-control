@@ -13,6 +13,9 @@
   const syncBtn      = document.getElementById("syncScreen");
   const scrollUpBtn  = document.getElementById("scrollUp");
   const scrollDownBtn= document.getElementById("scrollDown");
+  const volUp   = document.getElementById("volUp");
+  const volDown = document.getElementById("volDown");
+  const volMute = document.getElementById("volMute");
 
   // NUEVO: selector de dispositivos (añadidos en index.html)
   const deviceSel    = document.getElementById("device");
@@ -68,6 +71,18 @@
       return originalSend({ ...args, target: args.target ?? chosen });
     };
   }
+
+  function sendSystem(action) {
+    Remote.api.sendCommand({
+      type: "SYSTEM",
+      action,              // "VOLUME_UP" | "VOLUME_DOWN" | "TOGGLE_MUTE"
+      payload: {},         // sin payload
+    });
+  }
+
+  if (volUp)   volUp.addEventListener("click",   () => sendSystem("VOLUME_UP"));
+  if (volDown) volDown.addEventListener("click", () => sendSystem("VOLUME_DOWN"));
+  if (volMute) volMute.addEventListener("click", () => sendSystem("TOGGLE_MUTE"));
 
   // Cargar lista al inicio
   loadDevices();

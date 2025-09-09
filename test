@@ -1,0 +1,7 @@
+./mvnw -DskipTests package
+
+# Instancia 1
+java -jar target/steamdeck-remote-control-0.0.1-SNAPSHOT.jar --server.port=8080 --app.device-id=local --spring.kafka.consumer.group-id=remote-executor-local-TEST --spring.kafka.consumer.auto-offset-reset=latest --spring.kafka.bootstrap-servers=localhost:9092
+
+# Instancia 2
+java -jar target/steamdeck-remote-control-0.0.1-SNAPSHOT.jar --server.port=8081 --app.device-id=steamdeck --spring.kafka.consumer.group-id=remote-executor-steamdeck-TEST --spring.kafka.consumer.auto-offset-reset=latest --spring.kafka.bootstrap-servers=localhost:9092

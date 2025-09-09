@@ -4,5 +4,6 @@ public enum CommandType {
     KEYBOARD,
     MOUSE,
     TEXT_INPUT,
-    MACRO
+    MACRO,
+    SYSTEM
 }
