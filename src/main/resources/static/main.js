@@ -97,6 +97,8 @@
   if (mediaNextBtn) mediaNextBtn.addEventListener("click", () => sendSystem("NEXT"));
   if (mediaPrevBtn) mediaPrevBtn.addEventListener("click", () => sendSystem("PREV"));
 
+
+
   // Cargar lista al inicio
   loadDevices();
 
