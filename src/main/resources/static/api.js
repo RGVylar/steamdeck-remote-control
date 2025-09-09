@@ -11,8 +11,21 @@ Remote.api = (() => {
     });
   }
 
+  let targetProvider = () => "local";
+  function setTargetProvider(fn) {
+    targetProvider = typeof fn === "function" ? fn : () => "local";
+  }
+
   async function sendCommand({ type, action, payload, target = "local" }) {
-    const body = { id: uuid(), type, action, payload, target, ts: Date.now() };
+    const finalTarget = target ?? targetProvider();
+    const body = {
+      id: uuid(),
+      type,
+      action,
+      payload,
+      target: finalTarget,
+      ts: Date.now()
+    };
     const res = await fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -21,5 +34,5 @@ Remote.api = (() => {
     if (!res.ok) console.error("Error enviando comando", res.status, await res.text().catch(()=> ""));
   }
 
-  return { sendCommand };
+  return { sendCommand, setTargetProvider };
 })();

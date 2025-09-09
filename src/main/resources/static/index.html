@@ -11,18 +11,21 @@
 </head>
 <body>
   <main class="wrap">
+      <section class="col">
+    <div class="row gap" style="align-items:center">
+      <label for="device" class="lbl" style="margin:0">Remote device:</label>
+      <select id="device" style="min-width:160px"></select>
+      <button id="refreshDevices" title="Buscar dispositivos">🔄</button>
+    </div>
+  </section>
     <section class="col input-col">
-      <h1>Remote</h1>
-      <label class="lbl">Texto a escribir</label>
       <textarea id="text" rows="3" placeholder="Escribe aquí…"></textarea>
-
       <div class="row gap">
         <button id="send">Enviar + Enter</button>
         <button id="focus">CTRL+L</button>
         <button id="esc">ESC</button>
       </div>
     </section>
-    
     <section class="col pad-col">
       <div class="row gap" style="align-items:center">
         <label for="sens" class="lbl" style="margin:0">Sensivility</label>
@@ -32,13 +35,16 @@
         <input id="absToggle" type="checkbox" />
       </div>
       <div class="row gap" style="align-items:center; justify-content:flex-end; margin-top:6px">
-        
       </div>
       <div class="mouse-buttons gap">
-        <button id="lclick" class="mouse-btn left"></button>
-        <button id="rclick" class="mouse-btn right"></button>
+        <button id="lclick" class="mouse-btn left">🖱️L</button>
+        <button id="rclick" class="mouse-btn right">🖱️ R</button>
       </div>
       <div id="pad" class="pad" aria-label="Trackpad táctil"></div>
+      <div class="mouse-buttons gap" style="margin-top:8px">
+        <button id="scrollUp"   class="mouse-btn left"  title="Scroll arriba">▲</button>
+        <button id="scrollDown" class="mouse-btn right" title="Scroll abajo">▼</button>
+      </div>
       <div class="gap">
         <span id="screenInfo" style="opacity:.7"></span>
         <button id="syncScreen" title="Sincronizar" style="margin-left:6px">🔄</button>
@@ -46,9 +52,9 @@
       <small class="hint">
         Desliza para mover el ratón de forma relativa.<br>
         Pincha para mover el raton de forma absoluta.<br>
-        Usa los botones para click izquierdo y derecho.
+        Usa los botones para click izquierdo y derecho.<br>
+        Usa ▲/▼ para hacer scroll.
       </small>
-
     </section>
   </main>
 

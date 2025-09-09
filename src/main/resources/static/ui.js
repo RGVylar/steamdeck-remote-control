@@ -8,11 +8,14 @@ Remote.ui = (() => {
   function getSensitivity() { return sensitivity || 1.0; }
   function isRelative() { return !(absToggle && absToggle.checked); }
 
-  function init({ sens, sensVal, absT, text, sendBtn, focusBtn, escBtn, lclickBtn, rclickBtn }) {
+  function init({ sens, sensVal, absT, text, sendBtn, focusBtn, escBtn, lclickBtn, rclickBtn, scrollUpBtn, scrollDownBtn }) {
     sensInput = sens || null;
     sensLabel = sensVal || null;
     absToggle = absT || null;
     textArea = text || null;
+    console.assert(scrollUpBtn,  "UI: scrollUpBtn NO encontrado");
+    console.assert(scrollDownBtn,"UI: scrollDownBtn NO encontrado");
+
 
     if (sensInput && sensLabel) {
       sensInput.value = String(sensitivity);
@@ -36,7 +39,7 @@ Remote.ui = (() => {
     });
 
     escBtn?.addEventListener("click", async () => {
-      // Implementa cuando tengas KEYBOARD.PRESS ESCAPE en el backend
+      // cuando tenga KEYBOARD.PRESS ESCAPE en backend
       // await Remote.api.sendCommand({ type:"KEYBOARD", action:"PRESS", payload:{ key:"ESC" }});
       console.log("ESC pendiente");
     });
@@ -47,7 +50,18 @@ Remote.ui = (() => {
     rclickBtn?.addEventListener("click", () =>
       Remote.api.sendCommand({ type: "MOUSE", action: "CLICK", payload: { button: "RIGHT" } })
     );
+    
+    const SCROLL_STEP = 3; // 3 "ticks" por pulsación
+    scrollUpBtn?.addEventListener("click", () =>{
+      Remote.api.sendCommand({ type: "MOUSE", action: "SCROLL", payload: { wheel: -SCROLL_STEP } })
+    });
+    scrollDownBtn?.addEventListener("click", () => {
+      Remote.api.sendCommand({ type: "MOUSE", action: "SCROLL", payload: { wheel: +SCROLL_STEP } })
+    });
+
   }
+
+  
 
   return { init, getSensitivity, isRelative };
 })();
