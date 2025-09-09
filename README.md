@@ -5,6 +5,9 @@
 [![Apache Kafka](https://img.shields.io/badge/Kafka-3.7-black?logo=apachekafka)]()
 [![Frontend](https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-blue?logo=javascript)]()
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)]()
+![GitHub last commit](https://img.shields.io/github/last-commit/rgvylar/steamdeck-remote-control)
+![GitHub repo size](https://img.shields.io/github/repo-size/rgvylar/steamdeck-remote-control)
+
 
 Controla tu **PC o Steam Deck** desde el móvil:
 - Mueve el ratón (modo relativo o absoluto).
