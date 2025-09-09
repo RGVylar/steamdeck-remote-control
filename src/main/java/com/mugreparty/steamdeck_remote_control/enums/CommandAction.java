@@ -7,8 +7,12 @@ public enum CommandAction {
   PRESS, RELEASE,
   // TEXT
   TYPE,
-  // SOUND
+
+  // SYSTEM
   VOLUME_UP,
   VOLUME_DOWN,
-  TOGGLE_MUTE
+  TOGGLE_MUTE,
+  PLAY_PAUSE,
+  NEXT,
+  PREV
 }

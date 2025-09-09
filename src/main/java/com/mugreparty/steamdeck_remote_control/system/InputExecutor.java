@@ -3,6 +3,7 @@ package com.mugreparty.steamdeck_remote_control.system;
 import com.mugreparty.steamdeck_remote_control.dto.CommandDto;
 import com.mugreparty.steamdeck_remote_control.enums.CommandType;
 import com.mugreparty.steamdeck_remote_control.dto.payload.MousePayload;
+import com.mugreparty.steamdeck_remote_control.dto.payload.SystemPayload;
 import com.mugreparty.steamdeck_remote_control.dto.payload.TextPayload;
 import com.mugreparty.steamdeck_remote_control.enums.CommandAction;
 
@@ -85,9 +86,16 @@ public class InputExecutor {
   private void handleSystem(CommandDto dto) {
     if (isWindows()) {
       switch (dto.action()) {
+        // Volumen
         case VOLUME_UP    -> WindowsKeys.volumeUp();
         case VOLUME_DOWN  -> WindowsKeys.volumeDown();
         case TOGGLE_MUTE  -> WindowsKeys.toggleMute();
+
+        // Media
+        case PLAY_PAUSE   -> WindowsKeys.playPause();
+        case NEXT         -> WindowsKeys.nextTrack();
+        case PREV         -> WindowsKeys.prevTrack();
+
         default -> throw new IllegalArgumentException("Acción SYSTEM no soportada: " + dto.action());
       }
       return;

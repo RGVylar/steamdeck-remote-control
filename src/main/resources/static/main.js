@@ -16,6 +16,9 @@
   const volUp   = document.getElementById("volUp");
   const volDown = document.getElementById("volDown");
   const volMute = document.getElementById("volMute");
+  const mediaPrevBtn      = document.getElementById("mediaPrev");
+  const mediaPlayPauseBtn = document.getElementById("mediaPlayPause");
+  const mediaNextBtn      = document.getElementById("mediaNext");
 
   // NUEVO: selector de dispositivos (añadidos en index.html)
   const deviceSel    = document.getElementById("device");
@@ -83,6 +86,10 @@
   if (volUp)   volUp.addEventListener("click",   () => sendSystem("VOLUME_UP"));
   if (volDown) volDown.addEventListener("click", () => sendSystem("VOLUME_DOWN"));
   if (volMute) volMute.addEventListener("click", () => sendSystem("TOGGLE_MUTE"));
+
+  if (mediaPlayPauseBtn)   mediaPlayPauseBtn.addEventListener("click",   () => sendSystem("PLAY_PAUSE"));
+  if (mediaNextBtn) mediaNextBtn.addEventListener("click", () => sendSystem("NEXT"));
+  if (mediaPrevBtn) mediaPrevBtn.addEventListener("click", () => sendSystem("PREV"));
 
   // Cargar lista al inicio
   loadDevices();
