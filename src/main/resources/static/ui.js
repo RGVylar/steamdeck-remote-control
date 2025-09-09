@@ -8,7 +8,7 @@ Remote.ui = (() => {
   function getSensitivity() { return sensitivity || 1.0; }
   function isRelative() { return !(absToggle && absToggle.checked); }
 
-  function init({ sens, sensVal, absT, text, sendBtn, focusBtn, escBtn, lclickBtn, rclickBtn, scrollUpBtn, scrollDownBtn }) {
+  function init({ sens, sensVal, absT, text, sendBtn, lclickBtn, rclickBtn, scrollUpBtn, scrollDownBtn }) {
     sensInput = sens || null;
     sensLabel = sensVal || null;
     absToggle = absT || null;
@@ -32,16 +32,6 @@ Remote.ui = (() => {
       if (!v) return;
       await Remote.api.sendCommand({ type: "TEXT_INPUT", action: "TYPE", payload: { text: v + "\n" } });
       textArea.value = "";
-    });
-
-    focusBtn?.addEventListener("click", async () => {
-      await Remote.api.sendCommand({ type: "TEXT_INPUT", action: "TYPE", payload: { text: "" } });
-    });
-
-    escBtn?.addEventListener("click", async () => {
-      // cuando tenga KEYBOARD.PRESS ESCAPE en backend
-      // await Remote.api.sendCommand({ type:"KEYBOARD", action:"PRESS", payload:{ key:"ESC" }});
-      console.log("ESC pendiente");
     });
 
     lclickBtn?.addEventListener("click", () =>

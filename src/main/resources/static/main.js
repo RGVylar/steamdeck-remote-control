@@ -5,8 +5,6 @@
   const absToggle    = document.getElementById("absToggle");
   const text         = document.getElementById("text");
   const sendBtn      = document.getElementById("send");
-  const focusBtn     = document.getElementById("focus");
-  const escBtn       = document.getElementById("esc");
   const lclickBtn    = document.getElementById("lclick");
   const rclickBtn    = document.getElementById("rclick");
   const screenInfo   = document.getElementById("screenInfo");
@@ -23,13 +21,19 @@
   // NUEVO: selector de dispositivos (añadidos en index.html)
   const deviceSel    = document.getElementById("device");
   const refreshBtn   = document.getElementById("refreshDevices");
+  const deviceName = document.getElementById("deviceName");
   const LS_KEY       = "selectedDevice";
+
+  function updateDeviceSummary() {
+    const txt = deviceSel?.selectedOptions?.[0]?.textContent || "—";
+    if (deviceName) deviceName.textContent = txt;
+  }
 
   // ---- Selector de dispositivo ----
   async function loadDevices() {
     // Fallback si aún no existe el endpoint en el backend
     let devices = [
-      { id: "local",     name: "Este portátil" },
+      { id: "local",     name: "Server" },
       { id: "steamdeck", name: "Steam Deck" }
     ];
     try {
@@ -57,11 +61,13 @@
         deviceSel.value = prev;
       }
       localStorage.setItem(LS_KEY, deviceSel.value);
+      updateDeviceSummary();  
     }
   }
 
   deviceSel?.addEventListener("change", () => {
     localStorage.setItem(LS_KEY, deviceSel.value);
+    updateDeviceSummary();  
   });
 
   refreshBtn?.addEventListener("click", loadDevices);
@@ -100,7 +106,7 @@
   // 2) UI (sensibilidad/botones)
   Remote.ui.init({
     sens, sensVal, absT: absToggle,
-    text, sendBtn, focusBtn, escBtn,
+    text, sendBtn,
     lclickBtn, rclickBtn, scrollUpBtn,
     scrollDownBtn
   }); // 

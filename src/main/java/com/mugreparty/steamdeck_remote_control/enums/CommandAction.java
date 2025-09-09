@@ -7,7 +7,6 @@ public enum CommandAction {
   PRESS, RELEASE,
   // TEXT
   TYPE,
-
   // SYSTEM
   VOLUME_UP,
   VOLUME_DOWN,

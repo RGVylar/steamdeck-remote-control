@@ -2,70 +2,89 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
-  />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
   <title>SteamDeck Remote</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="wrap">
-      <section class="col">
-    <div class="row gap" style="align-items:center">
-      <label for="device" class="lbl" style="margin:0">Remote device:</label>
-      <select id="device" style="min-width:160px"></select>
-      <button id="refreshDevices" title="Buscar dispositivos">🔄</button>
+
+    <!-- Selector de dispositivo (lo mantenemos arriba) -->
+    <section class="col">
+      <details class="settings" id="deviceSettings">
+        <summary class="setting-summary">
+          <span>🖥️ Dispositivo</span>
+          <strong id="deviceName">—</strong>
+        </summary>
+
+        <div class="row gap" style="align-items:center; margin-top:10px">
+          <select id="device" style="min-width:200px"></select>
+          <button id="refreshDevices" title="Buscar dispositivos">🔄</button>
+        </div>
+      </details>
+    </section>
+
+    <!-- Texto -->
+    <section class="col input-col">
+    <div class="row gap text-row">
+      <textarea id="text" rows="3" placeholder="Escribe aquí…"></textarea>
+      <button id="send">Send</button>
     </div>
   </section>
+
     <section class="col input-col">
-      <textarea id="text" rows="3" placeholder="Escribe aquí…"></textarea>
-      <div class="row gap">
-        <button id="send">Enviar + Enter</button>
-        <button id="focus">CTRL+L</button>
-        <button id="esc">ESC</button>
-      </div>
-      <div class="spacer"></div>
+      <!-- Volumen -->
       <div class="row gap compact" style="margin-left:auto">
         <button id="volDown" class="mouse-btn left" title="Bajar volumen">🔉</button>
         <button id="volMute" class="mouse-btn center" title="Silencio">🔇</button>
-        <button id="volUp" class="mouse-btn right" title="Subir volumen">🔊</button>
+        <button id="volUp"   class="mouse-btn right" title="Subir volumen">🔊</button>
       </div>
+
+      <!-- Media -->
       <div class="row gap compact" style="margin-left:auto">
         <button id="mediaPrev"       class="mouse-btn left"   title="Anterior">⏮</button>
         <button id="mediaPlayPause"  class="mouse-btn center" title="Pausa/Reanudar">⏯</button>
         <button id="mediaNext"       class="mouse-btn right"  title="Siguiente">⏭</button>
       </div>
+
     </section>
+
+    <!-- Pad -->
     <section class="col pad-col">
-      <div class="row gap" style="align-items:center">
-        <label for="sens" class="lbl" style="margin:0">Sensivility</label>
-        <input id="sens" type="range" min="0.4" max="10.0" step="0.1" value="5.0" />
-        <span id="sensVal">5.0×</span>
-        <label for="absToggle" class="lbl" style="margin:0">Absolute</label>
-        <input id="absToggle" type="checkbox" />
-      </div>
-      <div class="row gap" style="align-items:center; justify-content:flex-end; margin-top:6px">
-      </div>
       <div class="mouse-buttons gap">
-        <button id="lclick" class="mouse-btn left">🖱️L</button>
+        <button id="lclick" class="mouse-btn left">🖱️ L</button>
         <button id="rclick" class="mouse-btn right">🖱️ R</button>
       </div>
+
       <div id="pad" class="pad" aria-label="Trackpad táctil"></div>
+
       <div class="mouse-buttons gap" style="margin-top:8px">
         <button id="scrollUp"   class="mouse-btn left"  title="Scroll arriba">▲</button>
         <button id="scrollDown" class="mouse-btn right" title="Scroll abajo">▼</button>
       </div>
-      <div class="gap">
+
+      <!-- Ajustes plegables -->
+      <details class="settings">
+        <summary>⚙️ Ajustes</summary>
+        <div class="row gap" style="align-items:center; margin-top:10px">
+          <label for="sens" class="lbl" style="margin:0">Sensitivity</label>
+          <input id="sens" type="range" min="0.4" max="10.0" step="0.1" value="5.0" />
+          <span id="sensVal">5.0×</span>
+          <label for="absToggle" class="lbl" style="margin:0">Absolute</label>
+          <input id="absToggle" type="checkbox" />
         <span id="screenInfo" style="opacity:.7"></span>
         <button id="syncScreen" title="Sincronizar" style="margin-left:6px">🔄</button>
       </div>
-      <small class="hint">
-        Desliza para mover el ratón de forma relativa.<br>
-        Pincha para mover el raton de forma absoluta.<br>
-        Usa los botones para click izquierdo y derecho.<br>
-        Usa ▲/▼ para hacer scroll.
-      </small>
+      </details>
+      
+      <details class="settings">
+        <small class="hint">
+          Desliza para mover el ratón de forma relativa.<br>
+          Pincha para mover el ratón de forma absoluta.<br>
+          Usa los botones para click izquierdo y derecho.<br>
+          Usa ▲/▼ para hacer scroll.
+        </small>
+      </details>
     </section>
   </main>
 
@@ -74,6 +93,5 @@
   <script src="ui.js"></script>
   <script src="pad.js"></script>
   <script src="main.js"></script>
-
 </body>
 </html>
