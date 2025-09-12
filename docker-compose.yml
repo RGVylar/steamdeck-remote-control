@@ -12,8 +12,10 @@ services:
       - --reserve-memory 0M
       - --node-id 0
       - --check=false
-      - --kafka-addr PLAINTEXT://0.0.0.0:9092
-      - --advertise-kafka-addr PLAINTEXT://localhost:9092
+      # - --kafka-addr PLAINTEXT://0.0.0.0:9092
+      - --kafka-addr 0.0.0.0:9092
+      - --advertise-kafka-addr 192.168.1.132:9092
+      #- --advertise-kafka-addr PLAINTEXT://localhost:9092
     ports:
       - "9092:9092"   # Kafka API
       - "9644:9644"   # Admin API (opcional)

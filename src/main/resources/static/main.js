@@ -31,37 +31,43 @@
 
   // ---- Selector de dispositivo ----
   async function loadDevices() {
-    // Fallback si aún no existe el endpoint en el backend
-    let devices = [
-      { id: "local",     name: "Server" },
-      { id: "steamdeck", name: "Steam Deck" }
-    ];
+  const btn = refreshBtn;
     try {
-      const r = await fetch("/api/v1/devices");
+      btn && (btn.disabled = true, btn.textContent = "⏳");
+      let devices = [{ id: "none", name: "none" }];
+      const r = await fetch(`/api/v1/devices?t=${Date.now()}`, { cache: "no-store" });
+      
       if (r.ok) {
         const data = await r.json();
         if (Array.isArray(data) && data.length) devices = data;
       }
-    } catch (e) {
-      // sin ruido; usamos fallback
-    }
 
-    // poblar <select>
-    if (deviceSel) {
-      deviceSel.innerHTML = "";
-      for (const d of devices) {
-        const opt = document.createElement("option");
-        opt.value = d.id;
-        opt.textContent = d.name || d.id;
-        deviceSel.appendChild(opt);
+      // poblar <select>
+      if (deviceSel) {
+        deviceSel.innerHTML = "";
+        for (const d of devices) {
+          const opt = document.createElement("option");
+          opt.value = d.id;
+          opt.textContent = d.name || d.id;
+          deviceSel.appendChild(opt);
+        }
+        // restaurar ultima selección si existe
+        const prev = localStorage.getItem(LS_KEY);
+        if (prev && [...deviceSel.options].some(o => o.value === prev)) {
+          deviceSel.value = prev;
+        } else if (deviceSel.options.length) {
+          deviceSel.value = deviceSel.options[0].value;
+        }
+        localStorage.setItem(LS_KEY, deviceSel.value);
+        updateDeviceSummary();  
+
+        // UX: si solo hay "none", deshabilita el selector
+        deviceSel.disabled = (devices.length === 1 && devices[0].id === "none");
       }
-      // restaurar última selección si existe
-      const prev = localStorage.getItem(LS_KEY);
-      if (prev && [...deviceSel.options].some(o => o.value === prev)) {
-        deviceSel.value = prev;
-      }
-      localStorage.setItem(LS_KEY, deviceSel.value);
-      updateDeviceSummary();  
+    } catch (_) {
+    // silenciar
+    } finally {
+      btn && (btn.disabled = false, btn.textContent = "🔄");
     }
   }
 
@@ -70,7 +76,17 @@
     updateDeviceSummary();  
   });
 
-  refreshBtn?.addEventListener("click", loadDevices);
+ refreshBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    loadDevices();
+  });
+
+  window.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") loadDevices();
+  });
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) loadDevices(); // Safari bfcache
+  });
 
   // Monkey-patch: inyectar target en todos los comandos sin tocar el resto de módulos
   if (window.Remote?.api?.sendCommand) {
@@ -101,6 +117,7 @@
 
   // Cargar lista al inicio
   loadDevices();
+  setInterval(loadDevices, 15000);
 
   // 1) ratio fallback inmediato + sync con el PC
   Remote.screen.init({ pad, screenInfo, syncButton: syncBtn }); // 
