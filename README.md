@@ -8,16 +8,17 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/rgvylar/steamdeck-remote-control)
 ![GitHub repo size](https://img.shields.io/github/repo-size/rgvylar/steamdeck-remote-control)
 
+Controla tu **PC o Steam Deck** desde el móvil, incluso varios dispositivos a la vez:
 
-Controla tu **PC o Steam Deck o varios dispositivos** desde el móvil:
-- Mueve el ratón (modo relativo o absoluto).
-- Haz clic izquierdo/derecho.
-- Haz scroll.
-- Envía texto desde el teclado del móvil (con Enter).
-- Atajos rápidos (ESC, CTRL+L).
-- Selección de dispositivo remoto.
-- Botones multimedia: 🔊 Subir volumen, 🔉 Bajar volumen, 🔇 Silencio.
-- **Selector de dispositivo remoto** (elige a qué equipo enviar comandos).
+- **QR automático** al arrancar → escanea y entra directo al control remoto.
+- **Configuración inicial** (Device ID, broker Kafka, puerto).
+- **Mover el ratón** (modo relativo o absoluto).
+- **Clic izquierdo/derecho** y **scroll**.
+- **Enviar texto** desde el móvil (con Enter).
+- **Atajos rápidos** (ESC, CTRL+L).
+- **Selector de dispositivo remoto** (elige a qué equipo mandar comandos).
+- **Botones multimedia**: 🔊 Subir volumen, 🔉 Bajar volumen, 🔇 Silencio, ⏯ Play/Pause, ⏮ Anterior, ⏭ Siguiente.
+- **Salir**: cierra la app de forma segura desde el móvil.
 
 ---
 
@@ -36,45 +37,38 @@ Móvil (web UI) -> REST API (Spring Boot) -> Kafka (topic: commands) -> Consumer
 
 ## Requisitos
 
-- **Java 17+**
-- **Maven**
-- **Kafka o Redpanda** local
-- Navegador en el móvil (Chrome/Firefox)
+- **Java 17+** (solo si usas el JAR directo).
+- **Maven** (para compilar desde código).
+- **Kafka o Redpanda** corriendo en al menos un PC de la LAN  
+  (el resto de PCs/Decks solo necesitan la app, se conectan al broker).
+- Navegador en el móvil (Chrome/Firefox).
 
 ---
 
 ## 🔧 Configuración rápida
 
-1. Clona el repo:
+1. Descarga la última release desde [Releases](https://github.com/RGVylar/steamdeck-remote-control/releases):
+   - `Steamdeck.Remote.Control.Installer-<versión>.msi` → instalador con acceso directo e icono.
+   - `Steamdeck.Remote.Control.Portable.zip` → versión portable con `.exe` listo para usar.
+   - `steamdeck-remote-control-<versión>.jar` → ejecutable independiente (requiere Java 17+).
+   - `docker-compose.yml` → para levantar **Redpanda** (Kafka) rápidamente.
+
+2. Levanta Redpanda si no tienes un broker en tu red:
    ```bash
-   git clone https://github.com/tuusuario/steamdeck-remote-control.git
-   cd steamdeck-remote-control
+   docker compose -f docker-compose.yml up -d
    ```
 
-2. Levanta Kafka (ejemplo con Redpanda):
-   ```bash
-   docker run -p 9092:9092 -p 9644:9644 docker.redpanda.com/redpandadata/redpanda:latest \
-     redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M --node-id 0 \
-     --check=false --kafka-addr PLAINTEXT://0.0.0.0:9092 \
-     --advertise-kafka-addr PLAINTEXT://localhost:9092
-   ```
+3. Arranca la aplicación (instalador, portable o JAR).  
+   Al abrir por primera vez:
+   - Configura **Device ID**, **Kafka bootstrap server** y **puerto**.  
+   - Se abrirá el navegador en `/qr` con un QR listo para escanear desde el móvil.
 
-3. Arranca el backend:
-   ```bash
-   mvn spring-boot:run
-   ```
-
-4. Abre el **frontend** en el móvil/PC:
-   ```
-   http://<IP-PC>:8080
-   ```
 
 ---
 
 ## Uso
 
-- **Selector de dispositivo**: desde el móvil puedes elegir a qué equipo enviar los comandos (ej. `local`, `steamdeck`, `pc-salón`).  
-  Esto permite controlar **varios dispositivos en la misma red** con una sola app.
+- **Selector de dispositivo**: en el móvil eliges qué equipo recibe los comandos (`portatil`, `steamdeck`, `sobremesa`).
 - **Mover ratón**: desliza en el trackpad.
 - **Click**: botones 🖱️ L / 🖱️ R.
 - **Scroll**: botones ▲ / ▼.
@@ -86,6 +80,10 @@ Móvil (web UI) -> REST API (Spring Boot) -> Kafka (topic: commands) -> Consumer
   - 🔊 Subir volumen
   - 🔉 Bajar volumen
   - 🔇 Silenciar
+  - ⏯ Play/Pause
+  - ⏮ Anterior
+  - ⏭ Siguiente
+- **Salir**: botón ✖ cierra la app remotamente.
 
 ---
 
@@ -96,22 +94,6 @@ Móvil (web UI) -> REST API (Spring Boot) -> Kafka (topic: commands) -> Consumer
 
 ---
 
-## Ejemplos curl
-
-```bash
-# Mover ratón
-curl -X POST http://localhost:8080/api/v1/commands \
-  -H "Content-Type: application/json" \
-  -d '{"type":"MOUSE","action":"MOVE","payload":{"x":960,"y":540,"mode":"ABSOLUTE"},"target":"local"}'
-
-# Escribir texto
-curl -X POST http://localhost:8080/api/v1/commands \
-  -H "Content-Type: application/json" \
-  -d '{"type":"TEXT_INPUT","action":"TYPE","payload":{"text":"hola mundo"},"target":"local"}'
-```
-
----
-
 ## Roadmap
 
 - [x] Movimiento ratón (relativo/absoluto).
@@ -119,8 +101,10 @@ curl -X POST http://localhost:8080/api/v1/commands \
 - [x] Scroll.
 - [x] Enviar texto.
 - [x] Atajos (ESC, CTRL+L).
-- [x] Botones multimedia (volumen/mute).
+- [x] Botones multimedia (volumen/mute/play/pause/next/prev).
 - [x] Selector de dispositivo.
+- [x] QR automático.
+- [x] Instalador MSI y portable.
 - [ ] Macros.
 - [ ] WebSocket para entrada en tiempo real.
 - [ ] UI móvil más avanzada (PWA).
