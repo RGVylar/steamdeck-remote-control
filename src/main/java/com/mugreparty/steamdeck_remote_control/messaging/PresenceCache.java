@@ -19,7 +19,7 @@ public class PresenceCache {
 
   @KafkaListener(
     topics = "presence",
-    groupId = "presence-cache",
+    groupId = "presence-cache-${app.device-id}",
     properties = {
         "spring.json.value.default.type=com.mugreparty.steamdeck_remote_control.dto.DeviceInfo",
         "spring.json.trusted.packages=com.mugreparty.steamdeck_remote_control.*,*"
