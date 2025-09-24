@@ -94,6 +94,39 @@ Móvil (web UI) -> REST API (Spring Boot) -> Kafka (topic: commands) -> Consumer
 
 ---
 
+## 📊 API Endpoints
+
+### Visualización de dispositivos
+
+**GET `/api/v1/graph`**
+
+Genera un grafo visual de los dispositivos conectados y lo devuelve en formato SVG o PNG.
+
+**Parámetros:**
+- `format` (opcional): `svg` (por defecto) o `png`
+
+**Respuesta:**
+- **200 OK**: Imagen del grafo con `Content-Type: image/svg+xml` o `image/png`
+- **400 Bad Request**: Formato no válido
+- **500 Internal Server Error**: Error al generar el grafo
+
+**Ejemplos:**
+```bash
+# SVG (por defecto)
+curl http://localhost:8080/api/v1/graph
+
+# PNG (requiere Graphviz nativo instalado)
+curl http://localhost:8080/api/v1/graph?format=png
+```
+
+**Notas:**
+- El grafo muestra un nodo central "remote-control" conectado a cada dispositivo.
+- Los dispositivos online aparecen en verde, los offline en gris.
+- **SVG**: Funciona siempre con el motor JavaScript interno.
+- **PNG**: Requiere instalar Graphviz en el sistema para layouts avanzados.
+
+---
+
 ## Roadmap
 
 - [x] Movimiento ratón (relativo/absoluto).
@@ -105,6 +138,7 @@ Móvil (web UI) -> REST API (Spring Boot) -> Kafka (topic: commands) -> Consumer
 - [x] Selector de dispositivo.
 - [x] QR automático.
 - [x] Instalador MSI y portable.
+- [x] Visualización de dispositivos (Graphviz).
 - [ ] Macros.
 - [ ] WebSocket para entrada en tiempo real.
 - [ ] UI móvil más avanzada (PWA).
